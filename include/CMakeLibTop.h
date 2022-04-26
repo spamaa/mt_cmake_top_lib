@@ -3,6 +3,8 @@
 
 #pragma once
 
-#include <iostream>
+namespace CMakeLibTop
+{
+	void About();
+}
 
-// TODO: Reference additional headers your program requires here.
