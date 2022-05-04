@@ -1,7 +1,7 @@
 ﻿// CMaleLibTop.h : Include file for standard system include files,
 // or project specific include files.
 
-// This is header for 1.0.3 master change 05
+// This is header for 1.0.4 master change 00
 
 #pragma once
 
