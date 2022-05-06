@@ -1,0 +1,11 @@
+{
+	"default-registry": null,
+	"registries" : [
+		{
+			"kind": "git",
+			"repository": "git-matterfi@odroidH2:repos/VcpkgPortProject.git",
+			"baseline": "9a20775a9aec8bcbc89b01761f84064dfa6eaa79",
+			"packages": [ "cmake-static-lib" ]
+		}
+	]
+}
