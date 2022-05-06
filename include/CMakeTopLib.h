@@ -8,5 +8,6 @@
 namespace CMakeTopLib
 {
 	void About();
+	void AboutStaticLib();
 }
 

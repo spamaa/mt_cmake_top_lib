@@ -3,6 +3,12 @@
 #
 cmake_minimum_required (VERSION 3.15)
 
+# this must be set if you want to compile direct from vstudio
+#set(VCPKG_TARGET_TRIPLET x64-windows-static)
+#set(VCPKG_OVERLAY_TRIPLETS c:/work/repos/matterfi/VcpkgPortProject/triplets)
+#set(VCPKG_FEATURE_FLAGS "registries,manifest")
+
+
 project ("CMakeTopLib")
 
 include(CMakePackageConfigHelpers)
