@@ -33,7 +33,7 @@ target_include_directories(CMakeTopLib
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-target_link_libraries(CMakeTopLib PRIVATE CMakeStaticLib::CMakeStaticLib)
+target_link_libraries(CMakeTopLib PUBLIC CMakeStaticLib::CMakeStaticLib)
 
 configure_package_config_file(cmake/config.cmake.in
 	${CMAKE_CURRENT_BINARY_DIR}/cmake-top-lib-config.cmake
