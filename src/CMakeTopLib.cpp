@@ -12,7 +12,7 @@ namespace CMakeTopLib
 	{
 		::std::cout << "Hello from CMakeLibTop" << ::std::endl;
 		::std::cout << __FUNCTION__ << ":" << __FILE__ << ":" << __LINE__ << std::endl;
-		::std::cout << "=== 2.0.0 ===" << ::std::endl;
+		::std::cout << "=== 2.0.1 ===" << ::std::endl;
 	}
 
 	void AboutStaticLib()

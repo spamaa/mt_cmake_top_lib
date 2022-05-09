@@ -1,4 +1,4 @@
 @PACKAGE_INIT@
 
-include(${CMAKE_CURRENT_LIST_DIR}/CMakeLibTop-targets.cmake)
-check_required_components(CMakeLibTop)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake-top-lib-targets.cmake)
+check_required_components(CMakeTopLib)
