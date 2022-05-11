@@ -52,20 +52,7 @@ configure_package_config_file(cmake/config.cmake.in
 	INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake-top-lib
 	NO_SET_AND_CHECK_MACRO)
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INC_DIR})
-
-install(
-	FILES
-		${CMAKE_CURRENT_BINARY_DIR}/cmake-top-lib-config.cmake
-	DESTINATION
-		${CMAKE_INSTALL_DATADIR}/cmake-top-lib)
-
-install(TARGETS CMakeTopLib EXPORT cmake-top-lib-targets)
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(EXPORT cmake-top-lib-targets
-	NAMESPACE CMakeTopLib::
-	DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake-top-lib)
-
+target_include_directories(CMakeTopLib PUBLIC ${PUBLIC_INC_DIR})
 
 # build msvc with sanitizer lib
 if (MSVC)
@@ -75,10 +62,10 @@ if (MSVC)
 	add_library(CMakeTopLib::CMakeTopLib-asan ALIAS CMakeTopLib-asan)
 
 	# add sanitizer 
-    target_compile_options(${PROJECT_NAME} PRIVATE
+    target_compile_options(CMakeTopLib-asan PRIVATE
         /fsanitize=address
     )
-    target_compile_definitions(${PROJECT_NAME} PUBLIC
+    target_compile_definitions(CMakeTopLib-asan PRIVATE
         MSVC_ASAN_ENABLED
     )
 
@@ -97,24 +84,22 @@ if (MSVC)
 
 	target_link_libraries(CMakeTopLib-asan PUBLIC CMakeStaticLib::CMakeStaticLib)
 
-	configure_package_config_file(cmake/config.cmake.in
-		${CMAKE_CURRENT_BINARY_DIR}/cmake-top-lib-config.cmake
-		INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake-top-lib
-		NO_SET_AND_CHECK_MACRO)
-
-	target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INC_DIR})
-
-	install(
-		FILES
-			${CMAKE_CURRENT_BINARY_DIR}/cmake-top-lib-config.cmake
-		DESTINATION
-			${CMAKE_INSTALL_DATADIR}/cmake-top-lib)
-
-	install(TARGETS CMakeTopLib-asan EXPORT cmake-top-lib-targets)
-	install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-	install(EXPORT cmake-top-lib-targets
-		NAMESPACE CMakeTopLib::
-		DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake-top-lib)
+	target_include_directories(CMakeTopLib-asan PUBLIC ${PUBLIC_INC_DIR})
 
 endif()
 
+install(
+	FILES
+		${CMAKE_CURRENT_BINARY_DIR}/cmake-top-lib-config.cmake
+	DESTINATION
+		${CMAKE_INSTALL_DATADIR}/cmake-top-lib)
+
+install(TARGETS CMakeTopLib EXPORT cmake-top-lib-targets)
+if (MSVC)
+	install(TARGETS CMakeTopLib-asan EXPORT cmake-top-lib-targets)
+endif()
+
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(EXPORT cmake-top-lib-targets
+	NAMESPACE CMakeTopLib::
+	DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake-top-lib)
