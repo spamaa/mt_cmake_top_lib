@@ -20,9 +20,6 @@ if (NOT DEFINED VCPKG_TARGET_TRIPLET)
 else()
     message (STATUS "Using triplet: '${VCPKG_TARGET_TRIPLET}'")
 endif()
-if (NOT DEFINED VCPKG_FEATURE_FLAGS)
-    message (FATAL_ERROR "!!!! VCPKG manifest and register mode is not enabled !!!!")
-endif()
 
 project ("CMakeTopLib")
 
