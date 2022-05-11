@@ -61,14 +61,6 @@
 
         },
         {
-            "name": "msvc_x64_static_debug_with_addr_sanitizer",
-            "displayName": "MSVC X64 static (debug with sanitizer)",
-            "inherits": "msvc_x64_static_debug",
-            "cacheVariables": {
-                "MSVC_ENABLE_ASAN": "ON"
-            }
-        },
-        {
             "name": "msvc_x64_static_release",
             "displayName": "MSVC x64 static(release)",
             "description": "Use msvc compiler, architecture x64, static linking, no debug symbols",
@@ -95,11 +87,6 @@
             "name": "msvc_x64_static_debug",
             "inherits": "common_buildPresets",
             "configurePreset": "msvc_x64_static_debug"
-        },
-        {
-            "name": "msvc_x64_static_debug_with_addr_sanitizer",
-            "inherits": "common_buildPresets",
-            "configurePreset": "msvc_x64_static_debug_with_addr_sanitizer"
         },
         {
             "name": "msvc_x64_static_release",

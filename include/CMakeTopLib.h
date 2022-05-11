@@ -1,7 +1,7 @@
 ﻿// CMaleLibTop.h : Include file for standard system include files,
 // or project specific include files.
 
-// This is header for 2.2.0S
+// This is header for 2.3.0
 
 #pragma once
 
