@@ -3,14 +3,6 @@
 #
 cmake_minimum_required (VERSION 3.15)
 
-# TEST_BEGIN
-message (STATUS "!!!! Inside cmake-top-lib cmake - BEGIN !!!!")
-message (STATUS "!!!! CMAKE_TOOLCHAIN_FILE: '${CMAKE_TOOLCHAIN_FILE}' !!!!")
-message (STATUS "!!!! VCPKG_OVERLAY_TRIPLETS: '${VCPKG_OVERLAY_TRIPLETS}' !!!!")
-message (STATUS "!!!! VCPKG_TARGET_TRIPLET: '${VCPKG_TARGET_TRIPLET}' !!!!")
-message (STATUS "!!!! Inside cmake-top-lib cmake - BEGIN !!!!")
-# TEST_END
-
 # check if toolchain file is set
 if (NOT DEFINED  CMAKE_TOOLCHAIN_FILE)
     message (FATAL_ERROR "!!!! VCPKG INTEGRATION IS NOT ENABLED !!!!")
@@ -19,17 +11,6 @@ else()
         message (FATAL_ERROR "!!!! cmake toolchain file does not exists: '${CMAKE_TOOLCHAIN_FILE}' !!!!")
     else()
         message (STATUS "Using cmake toolchain file: '${CMAKE_TOOLCHAIN_FILE}'")
-    endif()
-endif()
-
-# check if triplets directory exists
-if (NOT DEFINED VCPKG_OVERLAY_TRIPLETS)
-    message (FATAL_ERROR "!!!! TRIPLET DEFINITION LOCATION IS NOT SPECFIED !!!!")
-else()
-    if(NOT IS_DIRECTORY "${VCPKG_OVERLAY_TRIPLETS}")
-        message (FATAL_ERROR "!!!! triplets directory not exists: '${VCPKG_OVERLAY_TRIPLETS}' !!!!")
-    else()
-        message (STATUS "Using triplets from: '${VCPKG_OVERLAY_TRIPLETS}'")
     endif()
 endif()
 
