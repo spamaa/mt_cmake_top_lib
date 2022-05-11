@@ -3,6 +3,14 @@
 #
 cmake_minimum_required (VERSION 3.15)
 
+# TEST_BEGIN
+message (STATUS "!!!! Inside cmake-top-lib cmake - BEGIN !!!!")
+message (STATUS "!!!! CMAKE_TOOLCHAIN_FILE: '${CMAKE_TOOLCHAIN_FILE}' !!!!")
+message (STATUS "!!!! VCPKG_OVERLAY_TRIPLETS: '${VCPKG_OVERLAY_TRIPLETS}' !!!!")
+message (STATUS "!!!! VCPKG_TARGET_TRIPLET: '${VCPKG_TARGET_TRIPLET}' !!!!")
+message (STATUS "!!!! Inside cmake-top-lib cmake - BEGIN !!!!")
+# TEST_END
+
 # check if toolchain file is set
 if (NOT DEFINED  CMAKE_TOOLCHAIN_FILE)
     message (FATAL_ERROR "!!!! VCPKG INTEGRATION IS NOT ENABLED !!!!")
@@ -34,14 +42,6 @@ endif()
 if (NOT DEFINED VCPKG_FEATURE_FLAGS)
     message (FATAL_ERROR "!!!! VCPKG manifest and register mode is not enabled !!!!")
 endif()
-
-# TEST_BEGIN
-message (STATUS "!!!! Inside cmake-top-lib cmake - BEGIN !!!!")
-message (STATUS "!!!! CMAKE_TOOLCHAIN_FILE: '${CMAKE_TOOLCHAIN_FILE}' !!!!")
-message (STATUS "!!!! VCPKG_OVERLAY_TRIPLETS: '${VCPKG_OVERLAY_TRIPLETS}' !!!!")
-message (STATUS "!!!! VCPKG_TARGET_TRIPLET: '${VCPKG_TARGET_TRIPLET}' !!!!")
-message (STATUS "!!!! Inside cmake-top-lib cmake - BEGIN !!!!")
-# TEST_END
 
 project ("CMakeTopLib")
 
