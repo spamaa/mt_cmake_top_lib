@@ -65,7 +65,7 @@ if (MSVC)
     target_compile_options(CMakeTopLib-asan PRIVATE
         /fsanitize=address
     )
-    target_compile_definitions(CMakeTopLib-asan PRIVATE
+    target_compile_definitions(CMakeTopLib-asan PUBLIC
         MSVC_ASAN_ENABLED
     )
 

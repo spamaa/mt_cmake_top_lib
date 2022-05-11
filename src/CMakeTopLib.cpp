@@ -12,7 +12,7 @@ namespace CMakeTopLib
 	{
 		::std::cout << "Hello from CMakeLibTop" << ::std::endl;
 		::std::cout << __FUNCTION__ << ":" << __FILE__ << ":" << __LINE__ << std::endl;
-		::std::cout << "=== 2.3.1 ===" << ::std::endl;
+		::std::cout << "=== 2.3.2 ===" << ::std::endl;
 #		if defined (MSVC_ASAN_ENABLED)
 		::std::cout << "msvc asan ENABLED" << ::std::endl;
 #		else
