@@ -3,13 +3,39 @@
 #
 cmake_minimum_required (VERSION 3.15)
 
-# this must be set if you want to compile direct from vstudio
-#set(VCPKG_TARGET_TRIPLET x64-windows-static)
-#set(VCPKG_OVERLAY_TRIPLETS c:/work/repos/matterfi/VcpkgPortProject/triplets)
-#set(VCPKG_FEATURE_FLAGS "registries,manifest")
-
+# check if toolchain file is set
+if (NOT DEFINED  CMAKE_TOOLCHAIN_FILE)
+    message (FATAL_ERROR "!!!! VCPKG INTEGRATION IS NOT ENABLED !!!!")
+else()
+    if (NOT EXISTS "${CMAKE_TOOLCHAIN_FILE}")
+        message (FATAL_ERROR "!!!! cmake toolchain file does not exists: '${CMAKE_TOOLCHAIN_FILE}' !!!!")
+    else()
+        message (STATUS "Using cmake toolchain file: '${CMAKE_TOOLCHAIN_FILE}'")
+    endif()
+endif()
 
 project ("CMakeTopLib")
+
+# check if triplets directory exists
+if (NOT DEFINED VCPKG_OVERLAY_TRIPLETS)
+    message (FATAL_ERROR "!!!! TRIPLET DEFINITION LOCATION IS NOT SPECFIED !!!!")
+else()
+    if(NOT IS_DIRECTORY "${VCPKG_OVERLAY_TRIPLETS}")
+        message (FATAL_ERROR "!!!! triplets directory not exists: '${VCPKG_OVERLAY_TRIPLETS}' !!!!")
+    else()
+        message (STATUS "Using triplets from: '${VCPKG_OVERLAY_TRIPLETS}'")
+    endif()
+endif()
+
+# check if triplet is set
+if (NOT DEFINED VCPKG_TARGET_TRIPLET)
+    message (FATAL_ERROR "!!!! TRIPLET TYPE IS NOT SELECTED !!!!")
+else()
+    message (STATUS "Using triplet: '${VCPKG_TARGET_TRIPLET}'")
+endif()
+if (NOT DEFINED VCPKG_FEATURE_FLAGS)
+    message (FATAL_ERROR "!!!! VCPKG manifest and register mode is not enabled !!!!")
+endif()
 
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
@@ -19,6 +45,21 @@ find_package(cmake-static-lib CONFIG REQUIRED)
 # Add source to this project's executable.
 add_library(CMakeTopLib src/CMakeTopLib.cpp )
 add_library(CMakeTopLib::CMakeTopLib ALIAS CMakeTopLib)
+
+if (MSVC)
+    # enable sanitizer
+    if (MSVC_ENABLE_ASAN)
+        message (STATUS "Enablling MSVC address sanitizer.")
+        target_compile_options(${PROJECT_NAME} PRIVATE
+            /fsanitize=address
+        )
+        target_compile_definitions(${PROJECT_NAME} PUBLIC
+            MSVC_ASAN_ENABLED
+        )
+    else()
+        message (STATUS "MSVC address sanitizer is disabled.")
+    endif()
+endif()
 
 if(BUILD_SHARED_LIBS AND WIN32)
 	target_compile_definitions(CMakeTopLib

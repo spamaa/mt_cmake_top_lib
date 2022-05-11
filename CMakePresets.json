@@ -1,0 +1,110 @@
+{
+    "comment": "This file requires following enviroment variables: VCPKG_ROOT_DIR - pointing to root directory of vcpkg installation, VCPKG_TRIPLETS_DIR - pointing to directory with triplet file definitions",
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 20,
+        "patch": 0
+    },
+
+    "configurePresets": [
+        {
+            "name": "common_configurePresets",
+            "hidden": true,
+            "description": "common settings for all presets. Sets default instal & build paths, generator, configures vcpkg",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "installDir": "${sourceDir}/install/${presetName}",
+            "cacheVariables": {
+                "comment": "configure vcpkg",
+                "VCPKG_OVERLAY_TRIPLETS": "$env{VCPKG_TRIPLETS_DIR}",
+                "VCPKG_FEATURE_FLAGS": "registries,manifest",
+                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT_DIR}scripts/buildsystems/vcpkg.cmake"
+            },
+            "warnings": {
+                "unusedCli": false
+            }
+
+        },
+        {
+            "name": "msvc_base",
+            "hidden": true,
+            "description": "Common settings for all msvc presets",
+            "inherits": "common_configurePresets",
+            "cacheVariables": {
+                "comment": "set msvc compiler",
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            }
+        },
+        {
+            "name": "msvc_static",
+            "hidden": true,
+            "description": "Common settings for all all msvc static presets",
+            "inherits": "msvc_base",
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-msvc-static"
+            }
+        },
+        {
+            "name": "msvc_x64_static_debug",
+            "displayName": "MSVC x64 static(debug)",
+            "description": "Use msvc compiler, architecture x64, static linking, with debug symbols",
+            "inherits": "msvc_static",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+
+        },
+        {
+            "name": "msvc_x64_static_debug_with_addr_sanitizer",
+            "displayName": "MSVC X64 static (debug with sanitizer)",
+            "inherits": "msvc_x64_static_debug",
+            "cacheVariables": {
+                "MSVC_ENABLE_ASAN": "ON"
+            }
+        },
+        {
+            "name": "msvc_x64_static_release",
+            "displayName": "MSVC x64 static(release)",
+            "description": "Use msvc compiler, architecture x64, static linking, no debug symbols",
+            "inherits": "msvc_static",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+
+        }
+
+    ],
+    "buildPresets": [
+        {
+            "name": "common_buildPresets",
+            "hidden": true,
+            "verbose": true,
+            "nativeToolOptions": [ "-k 0" ]
+        },
+        {
+            "name": "msvc_x64_static_debug",
+            "inherits": "common_buildPresets",
+            "configurePreset": "msvc_x64_static_debug"
+        },
+        {
+            "name": "msvc_x64_static_debug_with_addr_sanitizer",
+            "inherits": "common_buildPresets",
+            "configurePreset": "msvc_x64_static_debug_with_addr_sanitizer"
+        },
+        {
+            "name": "msvc_x64_static_release",
+            "inherits": "common_buildPresets",
+            "configurePreset": "msvc_x64_static_release"
+        }
+    ]
+}
