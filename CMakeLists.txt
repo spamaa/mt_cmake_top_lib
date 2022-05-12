@@ -28,9 +28,23 @@ include(GNUInstallDirs)
 
 find_package(cmake-static-lib CONFIG REQUIRED)
 
-# Add source to this project's executable.
+# build statdard library version
 add_library(CMakeTopLib src/CMakeTopLib.cpp )
 add_library(CMakeTopLib::CMakeTopLib ALIAS CMakeTopLib)
+
+if (MSVC_ENABLE_ASAN)
+	# add sanitizer 
+	message (STATUS "CMakeTopLib build with MSVC ASAN.")
+    target_compile_options(CMakeTopLib PRIVATE
+        /fsanitize=address
+    )
+    target_compile_definitions(CMakeTopLib PRIVATE
+        MSVC_ASAN_ENABLED
+    )
+else()
+	message (STATUS "CMakeTopLib build without MSVC ASAN")
+endif()
+
 
 if(BUILD_SHARED_LIBS AND WIN32)
 	target_compile_definitions(CMakeTopLib
@@ -47,46 +61,52 @@ target_include_directories(CMakeTopLib
 
 target_link_libraries(CMakeTopLib PUBLIC CMakeStaticLib::CMakeStaticLib)
 
+target_include_directories(CMakeTopLib PUBLIC ${PUBLIC_INC_DIR})
+
+# build extended library version
+add_library(CMakeTopLib-ext src/CMakeTopLib.cpp )
+add_library(CMakeTopLib::CMakeTopLib-ext ALIAS CMakeTopLib-ext)
+
+if (MSVC_ENABLE_ASAN)
+	# add sanitizer 
+	message (STATUS "CMakeTopLib-ext build with MSVC ASAN.")
+    target_compile_options(CMakeTopLib-ext PRIVATE
+        /fsanitize=address
+    )
+    target_compile_definitions(CMakeTopLib-ext PRIVATE
+        MSVC_ASAN_ENABLED
+    )
+else()
+	message (STATUS "CMakeTopLib-ext build without MSVC ASAN")
+endif()
+
+target_compile_definitions(CMakeTopLib-ext PRIVATE
+	CMAKETOPLIB_EXT
+)
+
+
+if(BUILD_SHARED_LIBS AND WIN32)
+	target_compile_definitions(CMakeTopLib-ext
+		PRIVATE "CMAKETOPLIB_EXPORT=__declspec(dllexport)"
+		INTERFACE "CMAKETOPLIB_EXPORT=__declspec(dllimport)")
+endif()
+
+target_compile_features(CMakeTopLib-ext PUBLIC cxx_std_17)
+target_include_directories(CMakeTopLib-ext
+	PUBLIC
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
+target_link_libraries(CMakeTopLib-ext PUBLIC CMakeStaticLib::CMakeStaticLib)
+
+target_include_directories(CMakeTopLib-ext PUBLIC ${PUBLIC_INC_DIR})
+
+# install
 configure_package_config_file(cmake/config.cmake.in
 	${CMAKE_CURRENT_BINARY_DIR}/cmake-top-lib-config.cmake
 	INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake-top-lib
 	NO_SET_AND_CHECK_MACRO)
-
-target_include_directories(CMakeTopLib PUBLIC ${PUBLIC_INC_DIR})
-
-# build msvc with sanitizer lib
-if (MSVC)
-
-	# Add source to this project's executable.
-	add_library(CMakeTopLib-asan src/CMakeTopLib.cpp )
-	add_library(CMakeTopLib::CMakeTopLib-asan ALIAS CMakeTopLib-asan)
-
-	# add sanitizer 
-    target_compile_options(CMakeTopLib-asan PRIVATE
-        /fsanitize=address
-    )
-    target_compile_definitions(CMakeTopLib-asan PUBLIC
-        MSVC_ASAN_ENABLED
-    )
-
-	if(BUILD_SHARED_LIBS AND WIN32)
-		target_compile_definitions(CMakeTopLib-asan
-			PRIVATE "CMAKETOPLIB_EXPORT=__declspec(dllexport)"
-			INTERFACE "CMAKETOPLIB_EXPORT=__declspec(dllimport)")
-	endif()
-
-	target_compile_features(CMakeTopLib-asan PUBLIC cxx_std_17)
-	target_include_directories(CMakeTopLib-asan
-		PUBLIC
-			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-			$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-	)
-
-	target_link_libraries(CMakeTopLib-asan PUBLIC CMakeStaticLib::CMakeStaticLib)
-
-	target_include_directories(CMakeTopLib-asan PUBLIC ${PUBLIC_INC_DIR})
-
-endif()
 
 install(
 	FILES
@@ -95,9 +115,7 @@ install(
 		${CMAKE_INSTALL_DATADIR}/cmake-top-lib)
 
 install(TARGETS CMakeTopLib EXPORT cmake-top-lib-targets)
-if (MSVC)
-	install(TARGETS CMakeTopLib-asan EXPORT cmake-top-lib-targets)
-endif()
+install(TARGETS CMakeTopLib-ext EXPORT cmake-top-lib-targets)
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(EXPORT cmake-top-lib-targets

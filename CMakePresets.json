@@ -75,7 +75,7 @@
             "inherits": "msvc_x64_static",
             "cacheVariables": {
                 "VCPKG_TARGET_TRIPLET": "x64-msvc-static-asan",
-                "MCVC_ENABLE_ASAN": "ON"
+                "MSVC_ENABLE_ASAN": "ON"
             }
         },
 
@@ -90,7 +90,7 @@
         {
             "name": "msvc_x64_static_debug_asan",
             "displayName": "MSVC x64 static(debug with addr sanitizer)",
-            "description": "Use msvc compiler, architecture x64, static linking, with debug symbols",
+            "description": "Use msvc compiler, architecture x64, static linking, with debug symbols with address sanitizer",
             "inherits": [ "msvc_x64_static_asan", "common_debug" ]
         },
         {
@@ -98,6 +98,12 @@
             "displayName": "MSVC x64 static(release)",
             "description": "Use msvc compiler, architecture x64, static linking, no debug symbols",
             "inherits": [ "msvc_x64_static", "common_release" ]
+        },
+        {
+            "name": "msvc_x64_static_release_asan",
+            "displayName": "MSVC x64 static(release with addr sanitizer)",
+            "description": "Use msvc compiler, architecture x64, static linking, no debug symbols with address sanitizer",
+            "inherits": [ "msvc_x64_static_asan", "common_release" ]
         }
 
     ],
@@ -122,6 +128,11 @@
             "name": "msvc_x64_static_release",
             "inherits": "common_buildPresets",
             "configurePreset": "msvc_x64_static_release"
+        },
+        {
+            "name": "msvc_x64_static_release_asan",
+            "inherits": "common_buildPresets",
+            "configurePreset": "msvc_x64_static_release_asan"
         }
     ]
 }

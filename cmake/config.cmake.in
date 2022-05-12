@@ -2,6 +2,4 @@
 
 include(${CMAKE_CURRENT_LIST_DIR}/cmake-top-lib-targets.cmake)
 check_required_components(CMakeTopLib)
-if (MSVC)
-    check_required_components(CMakeTopLib-asan)
-endif()
+check_required_components(CMakeTopLib-ext)

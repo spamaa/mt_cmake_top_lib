@@ -12,11 +12,16 @@ namespace CMakeTopLib
 	{
 		::std::cout << "Hello from CMakeLibTop" << ::std::endl;
 		::std::cout << __FUNCTION__ << ":" << __FILE__ << ":" << __LINE__ << std::endl;
-		::std::cout << "=== 2.3.2 ===" << ::std::endl;
+		::std::cout << "=== 2.4.0 ===" << ::std::endl;
 #		if defined (MSVC_ASAN_ENABLED)
 		::std::cout << "msvc asan ENABLED" << ::std::endl;
 #		else
 		::std::cout << "msvc asan DIABLED" << ::std::endl;
+#		endif
+#		if defined (CMAKETOPLIB_EXT)
+		::std::cout << "Extended library version" << ::std::endl;
+#		else
+		::std::cout << "Standard library version" << ::std::endl;
 #		endif
 	}
 
