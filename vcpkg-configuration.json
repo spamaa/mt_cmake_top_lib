@@ -8,8 +8,8 @@
 		{
 			"kind": "git",
 			"repository": "git-matterfi@odroidH2:repos/VcpkgPortProject.git",
-			"baseline": "abcec3bc32e3f4ea84a0e0b9339dc6c914a46711",
-			"packages": [ "cmake-static-lib", "cmake-top-lib" ]
+			"baseline": "2a9981711d69f04bfb1b98f239b22c655971ff65",
+			"packages": [ "cmake-static-lib", "cmake-top-lib", "matterfi-cmake" ]
 		}
 	]
 }

@@ -1,8 +1,12 @@
 {
     "name": "cmake-lib-top",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "description": "Hello world top level lib",
     "dependencies": [
-        "cmake-static-lib"
+        "cmake-static-lib",
+        {
+            "name": "matterfi-cmake",
+            "host":  true
+        }
     ]
 }

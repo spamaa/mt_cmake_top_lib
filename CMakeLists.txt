@@ -3,6 +3,13 @@
 #
 cmake_minimum_required (VERSION 3.15)
 
+project ("CMakeTopLib")
+
+# this include must be after project
+include ("${VCPKG_INSTALLED_DIR}/${MATTERFI_CMAKE_HOST_TRIPLET}/${MATTERFI_CMAKE_CONFIG_FILE}")
+# call hello function from matterfi cmake modules
+matterfi_hello()
+
 # check if toolchain file is set
 if (NOT DEFINED  CMAKE_TOOLCHAIN_FILE)
     message (FATAL_ERROR "!!!! VCPKG INTEGRATION IS NOT ENABLED !!!!")
@@ -21,7 +28,6 @@ else()
     message (STATUS "Using triplet: '${VCPKG_TARGET_TRIPLET}'")
 endif()
 
-project ("CMakeTopLib")
 
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
