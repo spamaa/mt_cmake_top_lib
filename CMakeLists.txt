@@ -7,27 +7,11 @@ project ("CMakeTopLib")
 
 # this include must be after project
 include ("${VCPKG_INSTALLED_DIR}/${MATTERFI_CMAKE_HOST_TRIPLET}/${MATTERFI_CMAKE_CONFIG_FILE}")
-# call hello function from matterfi cmake modules
-matterfi_hello()
 
-# check if toolchain file is set
-if (NOT DEFINED  CMAKE_TOOLCHAIN_FILE)
-    message (FATAL_ERROR "!!!! VCPKG INTEGRATION IS NOT ENABLED !!!!")
-else()
-    if (NOT EXISTS "${CMAKE_TOOLCHAIN_FILE}")
-        message (FATAL_ERROR "!!!! cmake toolchain file does not exists: '${CMAKE_TOOLCHAIN_FILE}' !!!!")
-    else()
-        message (STATUS "Using cmake toolchain file: '${CMAKE_TOOLCHAIN_FILE}'")
-    endif()
-endif()
-
-# check if triplet is set
-if (NOT DEFINED VCPKG_TARGET_TRIPLET)
-    message (FATAL_ERROR "!!!! TRIPLET TYPE IS NOT SELECTED !!!!")
-else()
-    message (STATUS "Using triplet: '${VCPKG_TARGET_TRIPLET}'")
-endif()
-
+# make vcpkg configuration checkings
+matterfi_check_toolchain_file()
+matterfi_check_triplets_location()
+matterfi_check_triplet_file()
 
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
