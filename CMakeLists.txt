@@ -21,19 +21,8 @@ find_package(cmake-static-lib CONFIG REQUIRED)
 add_library(CMakeTopLib src/CMakeTopLib.cpp )
 add_library(CMakeTopLib::CMakeTopLib ALIAS CMakeTopLib)
 
-if (MSVC_ENABLE_ASAN)
-	# add sanitizer 
-	message (STATUS "CMakeTopLib build with MSVC ASAN.")
-    target_compile_options(CMakeTopLib PRIVATE
-        /fsanitize=address
-    )
-    target_compile_definitions(CMakeTopLib PRIVATE
-        MSVC_ASAN_ENABLED
-    )
-else()
-	message (STATUS "CMakeTopLib build without MSVC ASAN")
-endif()
 
+matterfi_enable_msvc_asan(CMakeTopLib)
 
 if(BUILD_SHARED_LIBS AND WIN32)
 	target_compile_definitions(CMakeTopLib
@@ -56,18 +45,7 @@ target_include_directories(CMakeTopLib PUBLIC ${PUBLIC_INC_DIR})
 add_library(CMakeTopLib-ext src/CMakeTopLib.cpp )
 add_library(CMakeTopLib::CMakeTopLib-ext ALIAS CMakeTopLib-ext)
 
-if (MSVC_ENABLE_ASAN)
-	# add sanitizer 
-	message (STATUS "CMakeTopLib-ext build with MSVC ASAN.")
-    target_compile_options(CMakeTopLib-ext PRIVATE
-        /fsanitize=address
-    )
-    target_compile_definitions(CMakeTopLib-ext PRIVATE
-        MSVC_ASAN_ENABLED
-    )
-else()
-	message (STATUS "CMakeTopLib-ext build without MSVC ASAN")
-endif()
+matterfi_enable_msvc_asan(CMakeTopLib-ext)
 
 target_compile_definitions(CMakeTopLib-ext PRIVATE
 	CMAKETOPLIB_EXT
