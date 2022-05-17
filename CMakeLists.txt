@@ -8,10 +8,9 @@ project ("CMakeTopLib")
 # this include must be after project
 include ("${VCPKG_INSTALLED_DIR}/${MATTERFI_CMAKE_HOST_TRIPLET}/${MATTERFI_CMAKE_CONFIG_FILE}")
 
-# make vcpkg configuration checkings
+# check if toolchain file is set
 matterfi_check_toolchain_file()
-matterfi_check_triplets_location()
-matterfi_check_triplet_file()
+matterfi_check_triplet_is_set()
 
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
