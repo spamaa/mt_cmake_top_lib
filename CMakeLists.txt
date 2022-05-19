@@ -87,4 +87,8 @@ install(TARGETS CMakeTopLib-ext EXPORT cmake-top-lib-targets)
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(EXPORT cmake-top-lib-targets
 	NAMESPACE CMakeTopLib::
-	DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake-top-lib)
+	DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake-top-lib
+)
+
+enable_testing()
+
