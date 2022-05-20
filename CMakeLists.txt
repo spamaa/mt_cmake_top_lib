@@ -18,7 +18,10 @@ include(GNUInstallDirs)
 find_package(cmake-static-lib CONFIG REQUIRED)
 
 # build statdard library version
-add_library(CMakeTopLib src/CMakeTopLib.cpp )
+add_library(CMakeTopLib 
+	src/CMakeTopLib.cpp 
+	src/plain/Plain.cpp
+)
 add_library(CMakeTopLib::CMakeTopLib ALIAS CMakeTopLib)
 
 
@@ -42,7 +45,10 @@ target_link_libraries(CMakeTopLib PUBLIC CMakeStaticLib::CMakeStaticLib)
 target_include_directories(CMakeTopLib PUBLIC ${PUBLIC_INC_DIR})
 
 # build extended library version
-add_library(CMakeTopLib-ext src/CMakeTopLib.cpp )
+add_library(CMakeTopLib-ext
+	src/CMakeTopLib.cpp 
+	src/ext/Ext.cpp
+)
 add_library(CMakeTopLib::CMakeTopLib-ext ALIAS CMakeTopLib-ext)
 
 matterfi_enable_msvc_asan(CMakeTopLib-ext)
