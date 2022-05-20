@@ -1,7 +1,7 @@
 #include "CMakeTopLibSpecificApi.h"
 
 #if defined(CMAKETOPLIB_EXT)
-namespace CMekTopLib
+namespace CMekeTopLib
 {
     int GiveMeSomeInt()
     {
