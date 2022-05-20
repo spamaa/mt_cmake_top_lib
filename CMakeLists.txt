@@ -16,6 +16,7 @@ include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
 find_package(cmake-static-lib CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
 
 # build statdard library version
 add_library(CMakeTopLib 
@@ -40,7 +41,10 @@ target_include_directories(CMakeTopLib
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-target_link_libraries(CMakeTopLib PUBLIC CMakeStaticLib::CMakeStaticLib)
+target_link_libraries(CMakeTopLib PUBLIC 
+	CMakeStaticLib::CMakeStaticLib
+	fmt::fmt
+)
 
 target_include_directories(CMakeTopLib PUBLIC ${PUBLIC_INC_DIR})
 
