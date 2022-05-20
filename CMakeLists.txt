@@ -75,7 +75,10 @@ target_include_directories(CMakeTopLib-ext
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-target_link_libraries(CMakeTopLib-ext PUBLIC CMakeStaticLib::CMakeStaticLib)
+target_link_libraries(CMakeTopLib-ext PUBLIC 
+	CMakeStaticLib::CMakeStaticLib
+	fmt::fmt
+)
 
 target_include_directories(CMakeTopLib-ext PUBLIC ${PUBLIC_INC_DIR})
 
