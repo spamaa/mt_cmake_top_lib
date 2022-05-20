@@ -4,6 +4,7 @@
 #include "CMakeTopLib.h"
 #include "CMakeStaticLib.h"
 #include <iostream>
+#include <fmt/format.h>
 
 
 namespace CMakeTopLib
@@ -45,6 +46,11 @@ namespace CMakeTopLib
 #	else
 		return false;
 #	endif
+	}
+
+	void MessageFromFmt()
+	{
+		::fmt::print("Message from fmt lib: {}:{}", __FILE__, __LINE__);
 	}
 }
 

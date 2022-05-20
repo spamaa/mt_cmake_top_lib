@@ -12,5 +12,6 @@ namespace CMakeTopLib
 	void MakeMemError();
 
 	bool IsExtendedLib();
+	void MessageFromFmt();
 }
 
